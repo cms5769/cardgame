@@ -18,6 +18,8 @@ public class CardManager : MonoBehaviour
     [SerializeField] Transform myCardLeft;
     [SerializeField] Transform myCardRight;
 
+
+
     List<Item> itemBuffer; 
 
     public Item PopItem()
