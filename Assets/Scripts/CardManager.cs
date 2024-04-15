@@ -3,24 +3,20 @@ using System.Collections.Generic;
 using Photon.Pun.Demo.Cockpit;
 using UnityEngine;
 
-
 public class CardManager : MonoBehaviour
 {
-
     public static CardManager Inst { get; private set; }
     void Awake() => Inst = this;
 
     [SerializeField] ItemSO itemSO; 
     [SerializeField] GameObject cardPrefab;
     [SerializeField] List<Card> myCards;
-    [SerializeField] List<Card> otherCards;
     [SerializeField] Transform cardSpawnPoint;
     [SerializeField] Transform myCardLeft;
     [SerializeField] Transform myCardRight;
 
-
-
     List<Item> itemBuffer; 
+
 
     public Item PopItem()
     {
@@ -55,94 +51,84 @@ public class CardManager : MonoBehaviour
         SetupItemBuffer(); //아이템 버퍼를 설정함
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            AddCard(true);
+            AddCard();
         }
-
-        /*if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            AddCard(false);
-        }*/
+            RemoveCard();
+        }
+        
     }
-
-    /*void AddCard(bool isMine)
-    {
-        var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position , Utils.QI);
-        var card = cardObject.GetComponent<Card>();
-        card.Setup(PopItem(), isMine); 
-        (isMine ? myCards : otherCards).Add(card);
-
-        SetOriginOrder(isMine);
-        CardAlignment(isMine);
-
-       
-
-    var spriteRenderer = cardObject.GetComponent<SpriteRenderer>();
-    if (spriteRenderer != null)
-    {
-        spriteRenderer.sortingLayerName = "Card";
-    }
-
-    }*/
-    void AddCard(bool isMine)
+    void RemoveCard()
 {
-    // Check if the total number of cards is 78
-    if (myCards.Count + otherCards.Count >= 78)
+    if (myCards.Count > 0)
     {
-        Debug.Log("All cards have been dealt.");
-        return;
+        Card cardToRemove = myCards[myCards.Count - 1];
+        myCards.RemoveAt(myCards.Count - 1);
+        Destroy(cardToRemove.gameObject);
     }
-
-        if ((isMine ? myCards.Count : otherCards.Count) >= 9)
+    else
     {
-        Debug.Log("Maximum number of cards reached.");
-        return;
-    }
-
-    var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position , Utils.QI);
-    var card = cardObject.GetComponent<Card>();
-    card.Setup(PopItem(), isMine); 
-    (isMine ? myCards : otherCards).Add(card);
-
-    SetOriginOrder(isMine);
-    CardAlignment(isMine);
-
-    var spriteRenderer = cardObject.GetComponent<SpriteRenderer>();
-    if (spriteRenderer != null)
-    {
-        spriteRenderer.sortingLayerName = "Card";
+        Debug.Log("No cards to remove.");
     }
 }
 
-
-
-
-    void SetOriginOrder(bool isMine)
+    void AddCard()
     {
-        int count = isMine ? myCards.Count : otherCards.Count;
-        for (int i = 0; i < count; i++)
+        // Check if the total number of cards is 78
+        if (myCards.Count >= 78)
         {
-            var targetCard = isMine ? myCards[i] : otherCards[i];
+            Debug.Log("All cards have been dealt.");
+            return;
+        }
+
+        if (myCards.Count >= 9)
+        {
+            Debug.Log("Maximum number of cards reached.");
+            return;
+        }
+
+         if (itemBuffer.Count == 0)
+    {
+        Debug.Log("No cards left in the deck.");
+        return;
+    }
+
+        var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position , Utils.QI);
+        var card = cardObject.GetComponent<Card>();
+        card.Setup(PopItem(), true); 
+        myCards.Add(card);
+
+        SetOriginOrder();
+        CardAlignment();
+
+        var spriteRenderer = cardObject.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sortingLayerName = "Card";
+        }
+    }
+
+    void SetOriginOrder()
+    {
+        for (int i = 0; i < myCards.Count; i++)
+        {
+            var targetCard = myCards[i];
             targetCard?.GetComponent<Order>().SetOriginOrder(i);
         }
     }
 
-       void CardAlignment(bool isMine)
+    void CardAlignment()
     {
-        List<PRS> originCardPRSs = new List<PRS>();
-        if (isMine)
-            originCardPRSs = RoundAlignment(myCardLeft, myCardRight, myCards.Count, 0.5f, Vector3.one * 0.8f);
-        //else
-           // originCardPRSs = RoundAlignment(OtherCardLeft, OtherCardRight, otherCards.Count, -0.5f, Vector3.one * 1.9f);
+        List<PRS> originCardPRSs = RoundAlignment(myCardLeft, myCardRight, myCards.Count, 0.5f, Vector3.one * 0.8f);
 
-        var targetCards = isMine ? myCards : otherCards;
-        for (int i = 0; i < targetCards.Count; i++)
+        for (int i = 0; i < myCards.Count; i++)
         {
-            var targetCard = targetCards[i];
+            var targetCard = myCards[i];
 
             targetCard.originPRS = originCardPRSs[i];
             targetCard.MoveTransform(targetCard.originPRS, true, 0.7f);
