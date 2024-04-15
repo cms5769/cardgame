@@ -17,8 +17,10 @@ public class GameStart : MonoBehaviour
         
     }
 
+    //게임화면 시작하는 함수
     public void StartGame()
     {
+        //씬스를 변경하는 코드
         SceneManager.LoadScene("InGame");
     }
 }
