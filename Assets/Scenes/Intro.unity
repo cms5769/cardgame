@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 42193661}
   - component: {fileID: 42193660}
   - component: {fileID: 42193662}
+  - component: {fileID: 42193663}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -237,6 +238,18 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   fadeState: 2
+--- !u!114 &42193663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42193657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8325f819957d1fe47a85ef4828ad960b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &68274842
 GameObject:
   m_ObjectHideFlags: 0
