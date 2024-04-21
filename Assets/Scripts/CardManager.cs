@@ -1,7 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Photon.Pun.Demo.Cockpit;
 using UnityEngine;
+
+using Random = UnityEngine.Random;
 
 public class CardManager : MonoBehaviour
 {
@@ -16,7 +20,9 @@ public class CardManager : MonoBehaviour
     [SerializeField] Transform myCardRight;
 
     List<Item> itemBuffer; 
-
+    Card selectCard;
+    bool isMyCardDrag;
+    bool onMyCardArea;
 
     public Item PopItem()
     {
@@ -49,6 +55,7 @@ public class CardManager : MonoBehaviour
     void Start()
     {
         SetupItemBuffer(); //아이템 버퍼를 설정함
+        DOTween.SetTweensCapacity(1000,200);
     }
 
     void Update()
@@ -62,7 +69,14 @@ public class CardManager : MonoBehaviour
             RemoveCard();
         }
         
+        if(isMyCardDrag)
+            CardDrag();
+        
+        DetectCardArea();
     }
+
+    
+
     void RemoveCard()
 {
     if (myCards.Count > 0)
@@ -124,7 +138,7 @@ public class CardManager : MonoBehaviour
 
     void CardAlignment()
     {
-        List<PRS> originCardPRSs = RoundAlignment(myCardLeft, myCardRight, myCards.Count, 0.5f, Vector3.one * 0.8f);
+        List<PRS> originCardPRSs = RoundAlignment(myCardLeft, myCardRight, myCards.Count, 0.5f, Vector3.one * 4.0f);
 
         for (int i = 0; i < myCards.Count; i++)
         {
@@ -180,4 +194,62 @@ public class CardManager : MonoBehaviour
             return null;
         }
     }
+
+
+
+    #region MyCard
+    public void CardMouseOver(Card card)
+    {
+        EnlargeCard(true, card);
+    }
+
+    public void CardMouseExit(Card card)
+    {
+        EnlargeCard(false, card);
+    }
+
+    public void CardMouseDown(Card card)
+    {
+        selectCard = card;
+        isMyCardDrag = true;
+    }
+
+    public void CardMouseUp()
+    {
+        isMyCardDrag = false;
+        isMyCardDrag = false;
+    }
+
+void CardDrag()
+{
+    if(selectCard != null)
+    {
+        selectCard.MoveTransform(new PRS(Utils.MousePos, Utils.QI, selectCard.originPRS.scale),false);
+    }
+}
+
+    void DetectCardArea()
+    {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(Utils.MousePos,Vector3.forward);
+        int layer = LayerMask.NameToLayer("MyCardArea");
+        onMyCardArea = Array.Exists(hits, x=> x.collider.gameObject.layer == layer);
+    }
+
+void EnlargeCard(bool isEnlarge, Card card)
+{
+    if (isEnlarge)
+    {
+        Vector3 enlargePos = new Vector3(card.originPRS.pos.x, card.originPRS.pos.y, card.originPRS.pos.z);
+        card.MoveTransform(new PRS(enlargePos, Utils.QI, Vector3.one * 5.0f), true, 1.0f);
+    }
+    else
+    {
+        card.MoveTransform(card.originPRS, true, 1.0f);
+    }
+
+    card.GetComponent<Order>().SetMostFrontOrder(isEnlarge);
+}
+
+
+    #endregion
 }

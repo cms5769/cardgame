@@ -42,6 +42,30 @@ public class Card : MonoBehaviour
             costTMP.text = "";
         }
     }
+
+    void OnMouseOver()
+    {
+        if(isFront)
+          CardManager.Inst.CardMouseOver(this);
+    }
+
+    void OnMouseExit()
+    {
+        if(isFront)
+          CardManager.Inst.CardMouseExit(this);
+    }
+
+    void OnMouseDown()
+    {
+        if(isFront)
+          CardManager.Inst.CardMouseDown(this);
+    }
+
+    void OnMouseUp()
+    {
+        if(isFront)
+          CardManager.Inst.CardMouseUp();
+    }
     // Start is called before the first frame update
     void Start()
     {
