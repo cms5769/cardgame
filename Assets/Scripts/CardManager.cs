@@ -12,14 +12,14 @@ public class CardManager : MonoBehaviour
     public static CardManager Inst { get; private set; }
     void Awake() => Inst = this;
 
-    [SerializeField] ItemSO itemSO; 
+    [SerializeField] ItemSO itemSO;
     [SerializeField] GameObject cardPrefab;
     [SerializeField] List<Card> myCards;
     [SerializeField] Transform cardSpawnPoint;
     [SerializeField] Transform myCardLeft;
     [SerializeField] Transform myCardRight;
 
-    List<Item> itemBuffer; 
+    List<Item> itemBuffer;
     Card selectCard;
     bool isMyCardDrag;
     bool onMyCardArea;
@@ -33,65 +33,63 @@ public class CardManager : MonoBehaviour
         itemBuffer.RemoveAt(0);
         return item;
     }
-   void SetupItemBuffer()
-{
-    itemBuffer = new List<Item>(100);
-    for (int i=0; i< itemSO.items.Length; i++)
+    void SetupItemBuffer()
     {
-        Item item = itemSO.items[i];
-        itemBuffer.Add(item);
-    }
+        itemBuffer = new List<Item>(100);
+        for (int i = 0; i < itemSO.items.Length; i++)
+        {
+            Item item = itemSO.items[i];
+            itemBuffer.Add(item);
+        }
 
-    for (int i=0;i<itemBuffer.Count; i++)
-    {
-        int rand = Random.Range(i, itemBuffer.Count);
-        Item temp = itemBuffer[i];
-        itemBuffer[i] = itemBuffer[rand];
-        itemBuffer[rand] = temp;
+        for (int i = 0; i < itemBuffer.Count; i++)
+        {
+            int rand = Random.Range(i, itemBuffer.Count);
+            Item temp = itemBuffer[i];
+            itemBuffer[i] = itemBuffer[rand];
+            itemBuffer[rand] = temp;
+        }
     }
-}
 
     // Start is called before the first frame update
     void Start()
     {
         SetupItemBuffer(); //아이템 버퍼를 설정함
-        DOTween.SetTweensCapacity(1000,200);
+        DOTween.SetTweensCapacity(1000, 200);
+        TurnManager.OnAddCard1 += AddCard;
+    }
+
+    void OnDestroy()
+    {
+        TurnManager.OnAddCard1-= AddCard;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            AddCard();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            RemoveCard();
-        }
-        
-        if(isMyCardDrag)
+
+        if (isMyCardDrag)
             CardDrag();
-        
+
         DetectCardArea();
     }
 
-    
+
 
     void RemoveCard()
-{
-    if (myCards.Count > 0)
     {
-        Card cardToRemove = myCards[myCards.Count - 1];
-        myCards.RemoveAt(myCards.Count - 1);
-        Destroy(cardToRemove.gameObject);
+        if (myCards.Count > 0)
+        {
+            Card cardToRemove = myCards[myCards.Count - 1];
+            myCards.RemoveAt(myCards.Count - 1);
+            Destroy(cardToRemove.gameObject);
+        }
+        else
+        {
+            Debug.Log("No cards to remove.");
+        }
     }
-    else
-    {
-        Debug.Log("No cards to remove.");
-    }
-}
 
-    void AddCard()
+    void AddCard(bool isMine)
     {
         // Check if the total number of cards is 78
         if (myCards.Count >= 78)
@@ -106,15 +104,15 @@ public class CardManager : MonoBehaviour
             return;
         }
 
-         if (itemBuffer.Count == 0)
-    {
-        Debug.Log("No cards left in the deck.");
-        return;
-    }
+        if (itemBuffer.Count == 0)
+        {
+            Debug.Log("No cards left in the deck.");
+            return;
+        }
 
-        var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position , Utils.QI);
+        var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position, Utils.QI);
         var card = cardObject.GetComponent<Card>();
-        card.Setup(PopItem(), true); 
+        card.Setup(PopItem(), isMine);
         myCards.Add(card);
 
         SetOriginOrder();
@@ -151,14 +149,14 @@ public class CardManager : MonoBehaviour
 
     List<PRS> RoundAlignment(Transform leftTr, Transform rightTr, int objCount, float height, Vector3 scale)
     {
-        float[] objLerps=new float[objCount];
+        float[] objLerps = new float[objCount];
         List<PRS> results = new List<PRS>(objCount);
 
         switch (objCount)
         {
             case 1: objLerps = new float[] { 0.5f }; break;
-            case 2: objLerps = new float[] { 0.27f,0.73f }; break;
-            case 3: objLerps = new float[] { 0.1f,0.5f,0.9f }; break;
+            case 2: objLerps = new float[] { 0.27f, 0.73f }; break;
+            case 3: objLerps = new float[] { 0.1f, 0.5f, 0.9f }; break;
             default:
                 float interval = 1f / (objCount - 1);
                 for (int i = 0; i < objCount; i++)
@@ -166,11 +164,11 @@ public class CardManager : MonoBehaviour
                 break;
         }
 
-        for (int i=0; i< objCount; i++)
+        for (int i = 0; i < objCount; i++)
         {
             var targetPos = Vector3.Lerp(leftTr.position, rightTr.position, objLerps[i]);
             var targetRot = Quaternion.identity;
-            if(objCount >=4)
+            if (objCount >= 4)
             {
                 float curve = Mathf.Sqrt(Mathf.Pow(height, 2) - Mathf.Pow(objLerps[i] - 0.5f, 2));
                 curve = height >= 0 ? curve : -curve;
@@ -178,7 +176,7 @@ public class CardManager : MonoBehaviour
                 targetRot = Quaternion.Slerp(leftTr.rotation, rightTr.rotation, objLerps[i]);
             }
 
-            results.Add(new PRS(targetPos, targetRot,scale));
+            results.Add(new PRS(targetPos, targetRot, scale));
         }
         return results;
     }
@@ -220,35 +218,35 @@ public class CardManager : MonoBehaviour
         isMyCardDrag = false;
     }
 
-void CardDrag()
-{
-    if(selectCard != null)
+    void CardDrag()
     {
-        selectCard.MoveTransform(new PRS(Utils.MousePos, Utils.QI, selectCard.originPRS.scale),false);
+        if (selectCard != null)
+        {
+            selectCard.MoveTransform(new PRS(Utils.MousePos, Utils.QI, selectCard.originPRS.scale), false);
+        }
     }
-}
 
     void DetectCardArea()
     {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(Utils.MousePos,Vector3.forward);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(Utils.MousePos, Vector3.forward);
         int layer = LayerMask.NameToLayer("MyCardArea");
-        onMyCardArea = Array.Exists(hits, x=> x.collider.gameObject.layer == layer);
+        onMyCardArea = Array.Exists(hits, x => x.collider.gameObject.layer == layer);
     }
 
-void EnlargeCard(bool isEnlarge, Card card)
-{
-    if (isEnlarge)
+    void EnlargeCard(bool isEnlarge, Card card)
     {
-        Vector3 enlargePos = new Vector3(card.originPRS.pos.x, card.originPRS.pos.y, card.originPRS.pos.z);
-        card.MoveTransform(new PRS(enlargePos, Utils.QI, Vector3.one * 5.0f), true, 1.0f);
-    }
-    else
-    {
-        card.MoveTransform(card.originPRS, true, 1.0f);
-    }
+        if (isEnlarge)
+        {
+            Vector3 enlargePos = new Vector3(card.originPRS.pos.x, card.originPRS.pos.y, card.originPRS.pos.z);
+            card.MoveTransform(new PRS(enlargePos, Utils.QI, Vector3.one * 5.0f), true, 1.0f);
+        }
+        else
+        {
+            card.MoveTransform(card.originPRS, true, 1.0f);
+        }
 
-    card.GetComponent<Order>().SetMostFrontOrder(isEnlarge);
-}
+        card.GetComponent<Order>().SetMostFrontOrder(isEnlarge);
+    }
 
 
     #endregion
