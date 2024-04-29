@@ -8,14 +8,14 @@ public class CardManager2 : MonoBehaviour
     public static CardManager2 Inst { get; private set; }
     void Awake() => Inst = this;
 
-    [SerializeField] ItemSO itemSO2; 
+    [SerializeField] ItemSO itemSO2;
     [SerializeField] GameObject cardPrefab;
     [SerializeField] List<Card> otherCards;
     [SerializeField] Transform cardSpawnPoint;
     [SerializeField] Transform OtherCardLeft;
     [SerializeField] Transform OtherCardRight;
-   
-    List<Item> itemBuffer; 
+
+    List<Item> itemBuffer;
 
     public Item PopItem()
     {
@@ -30,13 +30,13 @@ public class CardManager2 : MonoBehaviour
     void SetupItemBuffer()
     {
         itemBuffer = new List<Item>(100);
-        for (int i=0; i< itemSO2.items.Length; i++)
+        for (int i = 0; i < itemSO2.items.Length; i++)
         {
             Item item = itemSO2.items[i];
             itemBuffer.Add(item);
         }
 
-        for (int i=0;i<itemBuffer.Count; i++)
+        for (int i = 0; i < itemBuffer.Count; i++)
         {
             int rand = Random.Range(i, itemBuffer.Count);
             Item temp = itemBuffer[i];
@@ -49,21 +49,20 @@ public class CardManager2 : MonoBehaviour
     void Start()
     {
         SetupItemBuffer(); //아이템 버퍼를 설정함
+        TurnManager.OnAddCard2 += AddCard;
+    }
+
+    void OnDestroy()
+    {
+        TurnManager.OnAddCard2 -= AddCard;
     }
 
     void Update()
     {
-             if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            AddCard();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            RemoveCard();
-        }
+
     }
 
-    void AddCard()
+    void AddCard(bool isMine)
     {
         // Check if the total number of cards is 78
         if (otherCards.Count >= 78)
@@ -78,9 +77,9 @@ public class CardManager2 : MonoBehaviour
             return;
         }
 
-        var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position , Utils.QI);
+        var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position, Utils.QI);
         var card = cardObject.GetComponent<Card>();
-        card.Setup(PopItem(), false); 
+        card.Setup(PopItem(), isMine);
         otherCards.Add(card);
 
         SetOriginOrder();
@@ -93,18 +92,18 @@ public class CardManager2 : MonoBehaviour
         }
     }
     void RemoveCard()
-{
-    if (otherCards.Count > 0)
     {
-        Card cardToRemove = otherCards[otherCards.Count - 1];
-        otherCards.RemoveAt(otherCards.Count - 1);
-        Destroy(cardToRemove.gameObject);
+        if (otherCards.Count > 0)
+        {
+            Card cardToRemove = otherCards[otherCards.Count - 1];
+            otherCards.RemoveAt(otherCards.Count - 1);
+            Destroy(cardToRemove.gameObject);
+        }
+        else
+        {
+            Debug.Log("No cards to remove.");
+        }
     }
-    else
-    {
-        Debug.Log("No cards to remove.");
-    }
-}
     void SetOriginOrder()
     {
         for (int i = 0; i < otherCards.Count; i++)
@@ -128,14 +127,14 @@ public class CardManager2 : MonoBehaviour
     }
     List<PRS> RoundAlignment(Transform leftTr, Transform rightTr, int objCount, float height, Vector3 scale)
     {
-        float[] objLerps=new float[objCount];
+        float[] objLerps = new float[objCount];
         List<PRS> results = new List<PRS>(objCount);
 
         switch (objCount)
         {
             case 1: objLerps = new float[] { 0.5f }; break;
-            case 2: objLerps = new float[] { 0.27f,0.73f }; break;
-            case 3: objLerps = new float[] { 0.1f,0.5f,0.9f }; break;
+            case 2: objLerps = new float[] { 0.27f, 0.73f }; break;
+            case 3: objLerps = new float[] { 0.1f, 0.5f, 0.9f }; break;
             default:
                 float interval = 1f / (objCount - 1);
                 for (int i = 0; i < objCount; i++)
@@ -143,11 +142,11 @@ public class CardManager2 : MonoBehaviour
                 break;
         }
 
-        for (int i=0; i< objCount; i++)
+        for (int i = 0; i < objCount; i++)
         {
             var targetPos = Vector3.Lerp(leftTr.position, rightTr.position, objLerps[i]);
             var targetRot = Quaternion.identity;
-            if(objCount >=4)
+            if (objCount >= 4)
             {
                 float curve = Mathf.Sqrt(Mathf.Pow(height, 2) - Mathf.Pow(objLerps[i] - 0.5f, 2));
                 curve = height >= 0 ? curve : -curve;
@@ -155,7 +154,7 @@ public class CardManager2 : MonoBehaviour
                 targetRot = Quaternion.Slerp(leftTr.rotation, rightTr.rotation, objLerps[i]);
             }
 
-            results.Add(new PRS(targetPos, targetRot,scale));
+            results.Add(new PRS(targetPos, targetRot, scale));
         }
         return results;
     }
