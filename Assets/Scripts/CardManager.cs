@@ -217,7 +217,7 @@ public class CardManager : MonoBehaviour
     public void CardMouseUp()
     {
         isMyCardDrag = false;
-        isMyCardDrag = false;
+
     }
 
 void CardDrag()
@@ -233,18 +233,20 @@ void CardDrag()
         RaycastHit2D[] hits = Physics2D.RaycastAll(Utils.MousePos,Vector3.forward);
         int layer = LayerMask.NameToLayer("MyCardArea");
         onMyCardArea = Array.Exists(hits, x=> x.collider.gameObject.layer == layer);
+
+        
     }
 
 void EnlargeCard(bool isEnlarge, Card card)
 {
     if (isEnlarge)
     {
-        Vector3 enlargePos = new Vector3(card.originPRS.pos.x, card.originPRS.pos.y, card.originPRS.pos.z);
-        card.MoveTransform(new PRS(enlargePos, Utils.QI, Vector3.one * 5.0f), true, 1.0f);
+        Vector3 enlargePos = new Vector3(card.originPRS.pos.x, -4.8f, 1.0f);
+        card.MoveTransform(new PRS(enlargePos, Utils.QI, Vector3.one *8.0f),false);
     }
     else
     {
-        card.MoveTransform(card.originPRS, true, 1.0f);
+        card.MoveTransform(card.originPRS,false);
     }
 
     card.GetComponent<Order>().SetMostFrontOrder(isEnlarge);
