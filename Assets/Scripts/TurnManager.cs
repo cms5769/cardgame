@@ -7,73 +7,79 @@ using Random = UnityEngine.Random;
 
 public class TurnManager : MonoBehaviour
 {
-    // 게임의 턴 단계를 나타내는 열거형
+    // 싱글톤 패턴을 위한 인스턴스
     public static TurnManager Inst { get; private set; }
-    void Awake() => Inst = this;
+    void Awake() => Inst = this;  // Awake에서 인스턴스를 설정
 
     [Header("Develop")]
-    [SerializeField][Tooltip("시작 턴 모드를 정합닌다")] ETrunMode eTrunMode;
+    [SerializeField][Tooltip("시작 턴 모드를 정합닌다")] ETrunMode eTrunMode;  // 시작 턴 모드를 설정
     
-    [SerializeField][Tooltip("카드 배분이 매우 빨라집니다.")] bool fastMode;
+    [SerializeField][Tooltip("카드 배분이 매우 빨라집니다.")] bool fastMode;  // 카드 배분 속도를 설정
 
-    [SerializeField][Tooltip("턴이 시작될 때 플레이어가 가지고 있는 카드의 수")] int startCardCount;
+    [SerializeField][Tooltip("턴이 시작될 때 플레이어가 가지고 있는 카드의 수")] int startCardCount;  // 턴 시작 시 플레이어가 가지고 있는 카드 수
 
     [Header("Properties")]
     public bool isLoading; // 게임이 로딩 중인지 여부
-    public bool myTurn;
+    public bool myTurn;  // 내 턴인지 여부
 
-    enum ETrunMode { Random, My, Other }
-    WaitForSeconds delay05 = new WaitForSeconds(0.5f);
-    WaitForSeconds delay07 = new WaitForSeconds(0.7f);
+    enum ETrunMode { Random, My, Other }  // 턴 모드를 나타내는 열거형
+    WaitForSeconds delay05 = new WaitForSeconds(0.5f);  // 0.5초 대기
+    WaitForSeconds delay07 = new WaitForSeconds(0.7f);  // 0.7초 대기
 
-    public static Action<bool> OnAddCard1;
-    public static Action<bool> OnAddCard2;
+    public static Action<bool> OnAddCard1;  // 카드 추가 이벤트 1
+    public static Action<bool> OnAddCard2;  // 카드 추가 이벤트 2
 
+    private Stela stela1;  // 스텔라 1
+    private Stela stela2;  // 스텔라 2
 
+    // 게임 설정을 하는 메소드
     void GameSetup()
     {
         if(fastMode)
-            delay05 = new WaitForSeconds(0.05f);
+            delay05 = new WaitForSeconds(0.05f);  // 빠른 모드인 경우 대기 시간을 줄임
 
+        // 턴 모드에 따라 내 턴인지 결정
         switch (eTrunMode)
         {
-            case ETrunMode.Random:
-                myTurn = Random.Range(0, 2) == 0 ? true : false;
+            case ETrunMode.Random:  // 무작위 모드인 경우
+                myTurn = Random.Range(0, 2) == 0 ? true : false;  // 0 또는 1을 무작위로 생성하여 내 턴인지 결정
                 break;
-            case ETrunMode.My:
-                myTurn = true;
+            case ETrunMode.My:  // 내 턴 모드인 경우
+                myTurn = true;  // 내 턴으로 설정
                 break;
-            case ETrunMode.Other:
-                myTurn = false;
+            case ETrunMode.Other:  // 다른 턴 모드인 경우
+                myTurn = false;  // 내 턴이 아님으로 설정
                 break;
         }
     }
 
+    // 게임을 시작하는 코루틴
     public IEnumerator StartGameCo()
     {
-        GameSetup();
-        isLoading = true;
+        GameSetup();  // 게임 설정
+        isLoading = true;  // 로딩 중으로 설정
         
+        // 각 플레이어에게 카드를 배분
         for (int i = 0; i < startCardCount; i++)
         {
             yield return delay05;
-            OnAddCard1?.Invoke(true);
+            OnAddCard1?.Invoke(true);  // 카드 추가 이벤트 1 호출
             yield return delay05;
-            OnAddCard2?.Invoke(true);
+            OnAddCard2?.Invoke(true);  // 카드 추가 이벤트 2 호출
         }
-
     }
 
+    // 턴을 시작하는 코루틴
     IEnumerator StartTurnCo()
     {
-        isLoading = true;
+        isLoading = true;  // 로딩 중으로 설정
 
         yield return delay07;
         if(myTurn)
-            OnAddCard1?.Invoke(true);
+            OnAddCard1?.Invoke(true);  // 내 턴인 경우 카드 추가 이벤트 1 호출
         else
-            OnAddCard2?.Invoke(true);
+            OnAddCard2?.Invoke(true);  // 내 턴이 아닌 경우 카드 추가 이벤트 2 호출
         yield return delay07;
-        isLoading = false;
+        isLoading = false;  // 로딩 완료
     }
 }
