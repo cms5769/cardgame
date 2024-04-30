@@ -23,7 +23,7 @@ public class CardManager : MonoBehaviour
     Card selectCard;
     bool isMyCardDrag;
     bool onMyCardArea;
-
+    
     public Item PopItem()
     {
         if (itemBuffer.Count == 0)
