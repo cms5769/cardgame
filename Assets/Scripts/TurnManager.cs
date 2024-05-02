@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun.Demo.Cockpit;
+using Photon.Realtime;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,7 +14,7 @@ public class TurnManager : MonoBehaviour
 
     [Header("Develop")]
     [SerializeField][Tooltip("시작 턴 모드를 정합닌다")] ETrunMode eTrunMode;  // 시작 턴 모드를 설정
-    
+
     [SerializeField][Tooltip("카드 배분이 매우 빨라집니다.")] bool fastMode;  // 카드 배분 속도를 설정
 
     [SerializeField][Tooltip("턴이 시작될 때 플레이어가 가지고 있는 카드의 수")] int startCardCount;  // 턴 시작 시 플레이어가 가지고 있는 카드 수
@@ -22,6 +23,8 @@ public class TurnManager : MonoBehaviour
     public bool isLoading; // 게임이 로딩 중인지 여부
     public bool myTurn;  // 내 턴인지 여부
 
+    private int turnCount = 0;  // 현재 턴 수
+
     enum ETrunMode { Random, My, Other }  // 턴 모드를 나타내는 열거형
     WaitForSeconds delay05 = new WaitForSeconds(0.5f);  // 0.5초 대기
     WaitForSeconds delay07 = new WaitForSeconds(0.7f);  // 0.7초 대기
@@ -29,13 +32,18 @@ public class TurnManager : MonoBehaviour
     public static Action<bool> OnAddCard1;  // 카드 추가 이벤트 1
     public static Action<bool> OnAddCard2;  // 카드 추가 이벤트 2
 
-    private Stela stela1;  // 스텔라 1
-    private Stela stela2;  // 스텔라 2
+    public static event Action<bool> OnTrunStarted;  // 턴 시작 이벤트
+
+    [SerializeField]
+    private Player player1;
+
+    [SerializeField]
+    private Player player2;
 
     // 게임 설정을 하는 메소드
     void GameSetup()
     {
-        if(fastMode)
+        if (fastMode)
             delay05 = new WaitForSeconds(0.05f);  // 빠른 모드인 경우 대기 시간을 줄임
 
         // 턴 모드에 따라 내 턴인지 결정
@@ -58,7 +66,13 @@ public class TurnManager : MonoBehaviour
     {
         GameSetup();  // 게임 설정
         isLoading = true;  // 로딩 중으로 설정
-        
+
+        // 모든 플레이어의 최대 스텔라 코스트를 1로 설정하고, 스텔라 코스트를 최대치로 설정
+        player1.IncreaseMaxStelaCost();
+        player1.ResetStelaCost();
+        player2.IncreaseMaxStelaCost();
+        player2.ResetStelaCost();
+
         // 각 플레이어에게 카드를 배분
         for (int i = 0; i < startCardCount; i++)
         {
@@ -72,14 +86,36 @@ public class TurnManager : MonoBehaviour
     // 턴을 시작하는 코루틴
     IEnumerator StartTurnCo()
     {
-        isLoading = true;  // 로딩 중으로 설정
-
+        isLoading = true;  // 로딩 중으로 설정)
         yield return delay07;
-        if(myTurn)
+        if (myTurn)
+        {
             OnAddCard1?.Invoke(true);  // 내 턴인 경우 카드 추가 이벤트 1 호출
+            if (turnCount >= 2)  // 2번째 턴부터
+            {
+                player1.IncreaseMaxStelaCost();  // 최대 스텔라 코스트 증가
+            }
+            player1.ResetStelaCost();  // 스텔라 코스트를 최대치로 설정
+
+            // 스텔라 코스트와 최대 스텔라 코스트 출력
+            Debug.Log("Player 1 Stela Cost: " + player1.StelaCost);
+            Debug.Log("Player 1 Max Stela Cost: " + player1.MaxStelaCost);
+        }
         else
+        {
             OnAddCard2?.Invoke(true);  // 내 턴이 아닌 경우 카드 추가 이벤트 2 호출
+            if (turnCount >= 2)  // 2번째 턴부터
+            {
+                player2.IncreaseMaxStelaCost();  // 최대 스텔라 코스트 증가
+            }
+            player2.ResetStelaCost();  // 스텔라 코스트를 최대치로 설정
+
+            // 스텔라 코스트와 최대 스텔라 코스트 출력
+            Debug.Log("Player 2 Stela Cost: " + player2.StelaCost);
+            Debug.Log("Player 2 Max Stela Cost: " + player2.MaxStelaCost);
+        }
         yield return delay07;
         isLoading = false;  // 로딩 완료
+        OnTrunStarted?.Invoke(myTurn);
     }
 }
