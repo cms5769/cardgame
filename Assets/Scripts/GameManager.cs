@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-
     public static GameManager Inst { get; private set; }
-    void Awake() => Inst = this;
+
+    public Player player1;  // 플레이어 1
+    public Player player2;  // 플레이어 2
+
+    private void Awake()
+    {
+        Inst = this;
+    }
 
 
     void Start()
@@ -15,7 +20,6 @@ public class GameManager : MonoBehaviour
         StartGame();
     }
 
-    // Update is called once per frame
     void Update()
     {
         InputCheatKey();
@@ -31,6 +35,12 @@ public class GameManager : MonoBehaviour
         {
             TurnManager.OnAddCard2?.Invoke(true);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            TurnManager.Inst.EndTurn();
+        }
+
+
     }
 
     public void StartGame()

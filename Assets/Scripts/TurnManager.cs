@@ -10,7 +10,18 @@ public class TurnManager : MonoBehaviour
 {
     // 싱글톤 패턴을 위한 인스턴스
     public static TurnManager Inst { get; private set; }
-    void Awake() => Inst = this;  // Awake에서 인스턴스를 설정
+
+    private Player player1;  // 플레이어 1
+    private Player player2;  // 플레이어 2
+
+    private void Awake()
+    {
+        // GameManager 클래스의 Player 인스턴스를 가져옴
+        Inst = this;
+        player1 = GameManager.Inst.player1;
+        player2 = GameManager.Inst.player2;
+
+    }
 
     [Header("Develop")]
     [SerializeField][Tooltip("시작 턴 모드를 정합닌다")] ETrunMode eTrunMode;  // 시작 턴 모드를 설정
@@ -23,7 +34,7 @@ public class TurnManager : MonoBehaviour
     public bool isLoading; // 게임이 로딩 중인지 여부
     public bool myTurn;  // 내 턴인지 여부
 
-    private int turnCount = 0;  // 현재 턴 수
+    private int turnCount = 1;  // 현재 턴 수
 
     enum ETrunMode { Random, My, Other }  // 턴 모드를 나타내는 열거형
     WaitForSeconds delay05 = new WaitForSeconds(0.5f);  // 0.5초 대기
@@ -33,12 +44,6 @@ public class TurnManager : MonoBehaviour
     public static Action<bool> OnAddCard2;  // 카드 추가 이벤트 2
 
     public static event Action<bool> OnTurnStarted;  // 턴 시작 이벤트
-
-    [SerializeField]
-    private Player player1;
-
-    [SerializeField]
-    private Player player2;
 
     // 게임 설정을 하는 메소드
     void GameSetup()
@@ -117,5 +122,12 @@ public class TurnManager : MonoBehaviour
         yield return delay07;
         isLoading = false;  // 로딩 완료
         OnTurnStarted?.Invoke(myTurn);
+    }
+
+    public void EndTurn()
+    {
+        turnCount++;  // 턴 수 증가
+        myTurn = !myTurn;  // 턴 변경
+        StartCoroutine(StartTurnCo());  // 턴 시작 코루틴 호출
     }
 }
