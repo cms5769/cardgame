@@ -39,6 +39,14 @@ public class GameManager : MonoBehaviour
         {
             TurnManager.Inst.EndTurn();
         }
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            player1.UseStelaCost(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            player2.UseStelaCost(1);
+        }
 
 
     }

@@ -26,7 +26,7 @@ public class EndTurnBtn : MonoBehaviour
         TurnManager.OnTurnStarted -= Setup;
     }
 
-    void Setup(bool isActive)
+    public void Setup(bool isActive)
     {
         GetComponent<Image>().sprite = isActive ? active : inactive;
         GetComponent<Button>().interactable = isActive;

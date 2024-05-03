@@ -10,6 +10,10 @@ public class Player : MonoBehaviour
     public GameObject stelaCostPrefab;  // 스텔라 코스트를 표시하는 Prefab
     public Transform stelaCostContainer;  // 스텔라 코스트 Prefab의 부모 객체
 
+    public GameObject usedStelaCostPrefab;  // 사용된 스텔라 코스트를 표시하는 Prefab
+
+    private List<GameObject> stelaCostObjects = new List<GameObject>();  // 스텔라 코스트 Prefab 리스트
+
     [SerializeField]
     public bool isPlayer1;  // 플레이어 1인지 여부를 나타내는 필드
 
@@ -30,6 +34,23 @@ public class Player : MonoBehaviour
         UpdateStelaCostUI();  // UI 업데이트
     }
 
+    public void UseStelaCost(int cost)
+    {
+        // 스텔라 코스트가 충분한지 확인
+        if (StelaCost >= cost)
+        {
+            // 스텔라 코스트 감소
+            StelaCost -= cost;
+
+            // UI 업데이트
+            UpdateStelaCostUI();
+        }
+        else
+        {
+            Debug.Log("Not enough stela cost");
+        }
+    }
+
     // 스텔라 코스트를 표시하는 UI를 업데이트하는 메소드
     private void UpdateStelaCostUI()
     {
@@ -38,6 +59,8 @@ public class Player : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+
+        stelaCostObjects.Clear();  // 리스트 초기화
 
         // 스텔라 코스트 만큼 Prefab 인스턴스화
         for (int i = 0; i < MaxStelaCost; i++)
@@ -56,10 +79,20 @@ public class Player : MonoBehaviour
             // Prefab 인스턴스화
             GameObject stelaCostObject = Instantiate(stelaCostPrefab, position, Quaternion.identity, stelaCostContainer);
 
-            // 현재 코스트가 최대 코스트보다 작은 경우, Prefab을 비활성화
+            // 리스트에 추가
+            stelaCostObjects.Add(stelaCostObject);
+
+            // 현재 코스트가 최대 코스트보다 작은 경우, 다른 Prefab으로 변경
             if (i >= StelaCost)
             {
-                stelaCostObject.SetActive(false);
+                // 마지막 요소 비활성화
+                stelaCostObjects[stelaCostObjects.Count - 1].SetActive(false);
+
+                // 새 Prefab 인스턴스화
+                GameObject usedStelaCostObject = Instantiate(usedStelaCostPrefab, position, Quaternion.identity, stelaCostContainer);
+
+                // 리스트의 마지막 요소로 설정
+                stelaCostObjects[stelaCostObjects.Count - 1] = usedStelaCostObject;
             }
         }
     }
