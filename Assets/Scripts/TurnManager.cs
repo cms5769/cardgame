@@ -32,7 +32,7 @@ public class TurnManager : MonoBehaviour
     public static Action<bool> OnAddCard1;  // 카드 추가 이벤트 1
     public static Action<bool> OnAddCard2;  // 카드 추가 이벤트 2
 
-    public static event Action<bool> OnTrunStarted;  // 턴 시작 이벤트
+    public static event Action<bool> OnTurnStarted;  // 턴 시작 이벤트
 
     [SerializeField]
     private Player player1;
@@ -116,6 +116,6 @@ public class TurnManager : MonoBehaviour
         }
         yield return delay07;
         isLoading = false;  // 로딩 완료
-        OnTrunStarted?.Invoke(myTurn);
+        OnTurnStarted?.Invoke(myTurn);
     }
 }

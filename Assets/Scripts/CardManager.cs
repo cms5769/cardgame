@@ -57,16 +57,16 @@ public class CardManager : MonoBehaviour
         SetupItemBuffer(); //아이템 버퍼를 설정함
         DOTween.SetTweensCapacity(1000, 200);
         TurnManager.OnAddCard1 += AddCard;
-        TurnManager.OnTrunStarted += OnTrunStarted;
+        TurnManager.OnTurnStarted += OnTurnStarted;
     }
 
     void OnDestroy()
     {
         TurnManager.OnAddCard1 -= AddCard;
-        TurnManager.OnTrunStarted -= OnTrunStarted;
+        TurnManager.OnTurnStarted -= OnTurnStarted;
     }
 
-    void OnTrunStarted(bool isMyTurn)
+    void OnTurnStarted(bool isMyTurn)
     {
        
     }
