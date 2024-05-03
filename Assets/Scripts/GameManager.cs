@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,12 @@ public class GameManager : MonoBehaviour
 
     public Player player1;  // 플레이어 1
     public Player player2;  // 플레이어 2
+
+    public Text stelaCostTextPlayer1;  // 스텔라 코스트를 표시하는 Text
+
+    public Text stelaCostTextPlayer2;  // 스텔라 코스트를 표시하는 Text
+
+
 
     private void Awake()
     {
@@ -23,6 +30,8 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         InputCheatKey();
+        stelaCostTextPlayer1.text = $"{player1.StelaCost}/{player1.MaxStelaCost}";
+        stelaCostTextPlayer2.text = $"{player2.StelaCost}/{player2.MaxStelaCost}";
     }
 
     void InputCheatKey()
