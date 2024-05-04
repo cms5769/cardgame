@@ -1,0 +1,483 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f16d5e9ce0eedb428188aef57cabc09, type: 3}
+  m_Name: ItemSO
+  m_EditorClassIdentifier: 
+  items:
+  - name: Major0
+    attack: 0
+    defense: 0
+    cost: 5
+    sprite: {fileID: 21300000, guid: 49219c8bd58934844a51f3482012f0a1, type: 3}
+    percent: 1.2820513
+  - name: Major1
+    attack: 0
+    defense: 0
+    cost: 3
+    sprite: {fileID: 21300000, guid: e9f65f5ebad89f947be62c2e56af1758, type: 3}
+    percent: 1.2820513
+  - name: Major2
+    attack: 0
+    defense: 0
+    cost: 1
+    sprite: {fileID: 21300000, guid: daf8713d19e7ca445aaee06e6ebf904d, type: 3}
+    percent: 1.282051
+  - name: Major3
+    attack: 0
+    defense: 0
+    cost: 0
+    sprite: {fileID: 21300000, guid: 71918240a39c7754c92b968ef2b282ea, type: 3}
+    percent: 1.2820513
+  - name: Major4
+    attack: 0
+    defense: 0
+    cost: 5
+    sprite: {fileID: 21300000, guid: f14ec41d21f48974e9bd438fe0852dda, type: 3}
+    percent: 1.2820513
+  - name: Major5
+    attack: 0
+    defense: 0
+    cost: 7
+    sprite: {fileID: 21300000, guid: e612d401fc3224e4cb82c758b58f95f8, type: 3}
+    percent: 1.2820513
+  - name: Major6
+    attack: 0
+    defense: 0
+    cost: 3
+    sprite: {fileID: 21300000, guid: 64e77108ad6da074087966a9da30189f, type: 3}
+    percent: 1.2820513
+  - name: Major7
+    attack: 0
+    defense: 0
+    cost: 5
+    sprite: {fileID: 21300000, guid: 061dec95c5ca75c46beaa3b917cc1eaf, type: 3}
+    percent: 1.2820513
+  - name: Major8
+    attack: 0
+    defense: 0
+    cost: 7
+    sprite: {fileID: 21300000, guid: f547dfb0cea8f794eb75b09e785524d1, type: 3}
+    percent: 1.2820513
+  - name: Major9
+    attack: 0
+    defense: 0
+    cost: 2
+    sprite: {fileID: 21300000, guid: 263b347b7bec2ca429e237950344583e, type: 3}
+    percent: 1.2820513
+  - name: Major10
+    attack: 0
+    defense: 0
+    cost: 3
+    sprite: {fileID: 21300000, guid: 58d622e43cd69854aa8655000ed51179, type: 3}
+    percent: 1.2820513
+  - name: Major11
+    attack: 0
+    defense: 0
+    cost: 0
+    sprite: {fileID: 21300000, guid: 4abe01f530de92d41aeff704330f231a, type: 3}
+    percent: 1.2820513
+  - name: Major12
+    attack: 0
+    defense: 0
+    cost: 0
+    sprite: {fileID: 21300000, guid: e7d34256c5821134fb180f3abd87c8e4, type: 3}
+    percent: 1.2820513
+  - name: Major13
+    attack: 0
+    defense: 0
+    cost: 9
+    sprite: {fileID: 21300000, guid: 1e74b4a03edc9854dab58ab47fbde30b, type: 3}
+    percent: 1.2820513
+  - name: Major14
+    attack: 0
+    defense: 0
+    cost: 10
+    sprite: {fileID: 21300000, guid: 8f3dd0fdcb5c8d240b705fe3f0ec1cba, type: 3}
+    percent: 1.2820513
+  - name: Major15
+    attack: 0
+    defense: 0
+    cost: 10
+    sprite: {fileID: 21300000, guid: 1da76079d902dff448185b4be130fa83, type: 3}
+    percent: 1.2820513
+  - name: Major16
+    attack: 0
+    defense: 0
+    cost: 2
+    sprite: {fileID: 21300000, guid: bd21c50643670b54a933f0064d4db2e7, type: 3}
+    percent: 1.2820513
+  - name: Major17
+    attack: 0
+    defense: 0
+    cost: 0
+    sprite: {fileID: 21300000, guid: b0b61e5739d351a4091b7137b9c8a6fc, type: 3}
+    percent: 1.2820513
+  - name: Major18
+    attack: 0
+    defense: 0
+    cost: 5
+    sprite: {fileID: 21300000, guid: 5e0750edc32d11a4db67ad75c1547fe8, type: 3}
+    percent: 1.2820513
+  - name: Major19
+    attack: 0
+    defense: 0
+    cost: 8
+    sprite: {fileID: 21300000, guid: 9937cc450a399964cbc209b9a0dbd7fa, type: 3}
+    percent: 1.2820513
+  - name: Major20
+    attack: 0
+    defense: 0
+    cost: 7
+    sprite: {fileID: 21300000, guid: cd7330d59a39eac4c9f73c636da728bf, type: 3}
+    percent: 1.2820513
+  - name: Major21
+    attack: 0
+    defense: 0
+    cost: 0
+    sprite: {fileID: 21300000, guid: 365fa12ea334b6441ace7312a8ca9070, type: 3}
+    percent: 1.2820513
+  - name: MinorFire1
+    attack: 450
+    defense: 120
+    cost: 5
+    sprite: {fileID: 21300000, guid: b652d3ef007f69149abeb005cc4c809e, type: 3}
+    percent: 1.2820513
+  - name: MinorFire2
+    attack: 300
+    defense: 100
+    cost: 3
+    sprite: {fileID: 21300000, guid: 795d7a222f5294e4b947d42807243d92, type: 3}
+    percent: 1.2820513
+  - name: MinorFire3
+    attack: 320
+    defense: 110
+    cost: 3
+    sprite: {fileID: 21300000, guid: 142ff61b0ff1a7b439cc9a41d82a0cad, type: 3}
+    percent: 1.2820513
+  - name: MinorFire4
+    attack: 200
+    defense: 0
+    cost: 2
+    sprite: {fileID: 21300000, guid: 67da94264df3b7945b9f7fbaf5e15da2, type: 3}
+    percent: 1.2820513
+  - name: MinorFire5
+    attack: 370
+    defense: 170
+    cost: 4
+    sprite: {fileID: 21300000, guid: 0cc1d34f5a801a44ca9c28c0be4c8194, type: 3}
+    percent: 1.2820513
+  - name: MinorFire6
+    attack: 290
+    defense: 80
+    cost: 3
+    sprite: {fileID: 21300000, guid: 20a8c527336ecbf41b633d47b16dfbd8, type: 3}
+    percent: 1.2820513
+  - name: MinorFire7
+    attack: 360
+    defense: 170
+    cost: 4
+    sprite: {fileID: 21300000, guid: 522064d42455f614799d7d092ea84eca, type: 3}
+    percent: 1.2820513
+  - name: MinorFire8
+    attack: 350
+    defense: 30
+    cost: 4
+    sprite: {fileID: 21300000, guid: 03e2f8ec8d2276a40a8a1100aaab2848, type: 3}
+    percent: 1.2820513
+  - name: MinorFire9
+    attack: 230
+    defense: 200
+    cost: 3
+    sprite: {fileID: 21300000, guid: 116373f5e65d0014eab2ac94b68de6f0, type: 3}
+    percent: 1.2820513
+  - name: MinorFire10
+    attack: 430
+    defense: 210
+    cost: 5
+    sprite: {fileID: 21300000, guid: e03170ad246bfe546a61998e5bec9657, type: 3}
+    percent: 1.2820513
+  - name: MinorFire11
+    attack: 380
+    defense: 50
+    cost: 5
+    sprite: {fileID: 21300000, guid: 7c88a5de6fcf43c4a958f237f74b8e18, type: 3}
+    percent: 1.2820513
+  - name: MinorFire12
+    attack: 200
+    defense: 90
+    cost: 4
+    sprite: {fileID: 21300000, guid: 9b1e7b4cb6fb36e48893b76a81240e5e, type: 3}
+    percent: 1.2820513
+  - name: MinorFire13
+    attack: 230
+    defense: 100
+    cost: 3
+    sprite: {fileID: 21300000, guid: f9e82c4370c153f41b05d055c94327ab, type: 3}
+    percent: 1.2820513
+  - name: MinorFire14
+    attack: 500
+    defense: 120
+    cost: 7
+    sprite: {fileID: 21300000, guid: b5d8160fb4394494899cca6d21a42e22, type: 3}
+    percent: 1.2820513
+  - name: MinorSoil1
+    attack: 200
+    defense: 430
+    cost: 5
+    sprite: {fileID: 21300000, guid: f49e486e6a1341d4cab330d06fe07eea, type: 3}
+    percent: 1.2820513
+  - name: MinorSoil2
+    attack: 100
+    defense: 230
+    cost: 2
+    sprite: {fileID: 21300000, guid: e451f7a2765af004d892dcec58f1bbae, type: 3}
+    percent: 1.2820513
+  - name: MinorSoil3
+    attack: 200
+    defense: 330
+    cost: 3
+    sprite: {fileID: 21300000, guid: 82c9f453526605d41b62e2706227445b, type: 3}
+    percent: 1.2820513
+  - name: MinorSoil4
+    attack: 110
+    defense: 240
+    cost: 2
+    sprite: {fileID: 21300000, guid: dd56e650472afdd48b14661fe4a2530d, type: 3}
+    percent: 1.2820513
+  - name: MinorSoil5
+    attack: 170
+    defense: 320
+    cost: 3
+    sprite: {fileID: 21300000, guid: ad22ad033cc61e5409a37ec4761e1dcc, type: 3}
+    percent: 1.2820513
+  - name: MinorSoil6
+    attack: 170
+    defense: 280
+    cost: 3
+    sprite: {fileID: 21300000, guid: 307b3c4cdc6eb024887385e3a6c6c470, type: 3}
+    percent: 1.2820513
+  - name: MinorSoil7
+    attack: 200
+    defense: 330
+    cost: 3
+    sprite: {fileID: 21300000, guid: dfd0be377aaa26d42beda24a23e548d7, type: 3}
+    percent: 1.2820513
+  - name: MinorSoil8
+    attack: 210
+    defense: 360
+    cost: 3
+    sprite: {fileID: 21300000, guid: 05ac089fa5a917d42a02cb4e4b73bb7b, type: 3}
+    percent: 1.2820513
+  - name: MinorSoil9
+    attack: 230
+    defense: 290
+    cost: 3
+    sprite: {fileID: 21300000, guid: 96b7eebc8c66d5045ab9dda6a9f9e394, type: 3}
+    percent: 1.2820513
+  - name: MinorSoil10
+    attack: 120
+    defense: 410
+    cost: 4
+    sprite: {fileID: 21300000, guid: dd53ca4533a81364f97f443969054cca, type: 3}
+    percent: 1.282051
+  - name: MinorSoil11
+    attack: 210
+    defense: 300
+    cost: 4
+    sprite: {fileID: 21300000, guid: f7f2732fe2919ef4a83422485cb8c23b, type: 3}
+    percent: 1.2820513
+  - name: MinorSoil12
+    attack: 160
+    defense: 290
+    cost: 3
+    sprite: {fileID: 21300000, guid: 7d7c5d7aa9560414f88be01222d3467f, type: 3}
+    percent: 1.2820513
+  - name: MinorSoil13
+    attack: 150
+    defense: 270
+    cost: 3
+    sprite: {fileID: 21300000, guid: aa8fd6127f8284f4ab81311632d0f467, type: 3}
+    percent: 1.2820513
+  - name: MinorSoil14
+    attack: 200
+    defense: 320
+    cost: 4
+    sprite: {fileID: 21300000, guid: 09e96efa4d2f8f2448b26871b39895d0, type: 3}
+    percent: 1.2820513
+  - name: MinorWater1
+    attack: 200
+    defense: 280
+    cost: 3
+    sprite: {fileID: 21300000, guid: 7aa918441c8234f4bbecf73d41201cc9, type: 3}
+    percent: 1.2820513
+  - name: MinorWater2
+    attack: 120
+    defense: 190
+    cost: 2
+    sprite: {fileID: 21300000, guid: 45f23cbead04f7240b8ea325e4206ed1, type: 3}
+    percent: 1.2820513
+  - name: MinorWater3
+    attack: 300
+    defense: 320
+    cost: 3
+    sprite: {fileID: 21300000, guid: 99538fa87735d7041a537d199779b35a, type: 3}
+    percent: 1.2820513
+  - name: MinorWater4
+    attack: 130
+    defense: 180
+    cost: 1
+    sprite: {fileID: 21300000, guid: 98407f4e9ea0ddb429178cb3f6cfb3e5, type: 3}
+    percent: 1.2820513
+  - name: MinorWater5
+    attack: 100
+    defense: 250
+    cost: 2
+    sprite: {fileID: 21300000, guid: c6ab12c3b68e36d4d8a2368a52f41f4f, type: 3}
+    percent: 1.2820513
+  - name: MinorWater6
+    attack: 250
+    defense: 250
+    cost: 3
+    sprite: {fileID: 21300000, guid: d4c0db1eed374ce44ba06f93e2473949, type: 3}
+    percent: 1.2820513
+  - name: MinorWater7
+    attack: 230
+    defense: 270
+    cost: 3
+    sprite: {fileID: 21300000, guid: e4ffaf15c11fd9548934a955208e2a55, type: 3}
+    percent: 1.282051
+  - name: MinorWater8
+    attack: 160
+    defense: 240
+    cost: 2
+    sprite: {fileID: 21300000, guid: 267a82c880a99b346a00ff11336b9576, type: 3}
+    percent: 1.2820513
+  - name: MinorWater9
+    attack: 270
+    defense: 400
+    cost: 4
+    sprite: {fileID: 21300000, guid: 8662ade5d1531ea409d7da6964e47f45, type: 3}
+    percent: 1.2820513
+  - name: MinorWater10
+    attack: 350
+    defense: 440
+    cost: 4
+    sprite: {fileID: 21300000, guid: 84a96c5609fe5894b9b3417017523497, type: 3}
+    percent: 1.2820513
+  - name: MinorWater11
+    attack: 200
+    defense: 150
+    cost: 4
+    sprite: {fileID: 21300000, guid: df2cd0fd79b214945a3dd1a42bdeeeca, type: 3}
+    percent: 1.2820513
+  - name: MinorWater12
+    attack: 300
+    defense: 250
+    cost: 4
+    sprite: {fileID: 21300000, guid: 6e51f57cb766b734ca09c44a5a5dabd3, type: 3}
+    percent: 1.2820513
+  - name: MinorWater13
+    attack: 250
+    defense: 100
+    cost: 3
+    sprite: {fileID: 21300000, guid: 55a646007b3e2ed499cb5a46af4f6da6, type: 3}
+    percent: 1.2820513
+  - name: MinorWater14
+    attack: 350
+    defense: 250
+    cost: 5
+    sprite: {fileID: 21300000, guid: 82f6e74693f69c644a018ff104c602fe, type: 3}
+    percent: 1.2820513
+  - name: MinorWind1
+    attack: 400
+    defense: 350
+    cost: 5
+    sprite: {fileID: 21300000, guid: ef7c08ebd8a72104283f65a207f1e7aa, type: 3}
+    percent: 1.2820513
+  - name: MinorWind2
+    attack: 250
+    defense: 200
+    cost: 2
+    sprite: {fileID: 21300000, guid: 22d6803fcb795f542acc6436049b844d, type: 3}
+    percent: 1.2820513
+  - name: MinorWind3
+    attack: 300
+    defense: 0
+    cost: 3
+    sprite: {fileID: 21300000, guid: f64aac0240e2ba348b61d1bad775006b, type: 3}
+    percent: 1.2820513
+  - name: MinorWind4
+    attack: 200
+    defense: 200
+    cost: 2
+    sprite: {fileID: 21300000, guid: 811a56d30bec112499f1d2e472fabfb7, type: 3}
+    percent: 1.2820513
+  - name: MinorWind5
+    attack: 150
+    defense: 100
+    cost: 1
+    sprite: {fileID: 21300000, guid: 8f7c1c842ddc232428f1348da0d91f8b, type: 3}
+    percent: 1.2820513
+  - name: MinorWind6
+    attack: 220
+    defense: 180
+    cost: 3
+    sprite: {fileID: 21300000, guid: 92f542881a5dfb144bbeaaddbc3e6016, type: 3}
+    percent: 1.2820513
+  - name: MinorWind7
+    attack: 270
+    defense: 200
+    cost: 3
+    sprite: {fileID: 21300000, guid: 3a80711eea40f094fb6a972796680ed3, type: 3}
+    percent: 1.2820513
+  - name: MinorWind8
+    attack: 300
+    defense: 220
+    cost: 3
+    sprite: {fileID: 21300000, guid: 166e60fdb95e9cd4bb2ca50a852dd4b8, type: 3}
+    percent: 1.2820513
+  - name: MinorWind9
+    attack: 330
+    defense: 200
+    cost: 4
+    sprite: {fileID: 21300000, guid: 0ef8c71626cf2424ca631942ddc8fa72, type: 3}
+    percent: 1.2820513
+  - name: MinorWind10
+    attack: 230
+    defense: 220
+    cost: 3
+    sprite: {fileID: 21300000, guid: ad92ef09f2bf66044b2ac9a30d72796d, type: 3}
+    percent: 1.2820513
+  - name: MinorWind11
+    attack: 120
+    defense: 80
+    cost: 1
+    sprite: {fileID: 21300000, guid: 722059482e3c7d74fa1e8fd5d83fdd82, type: 3}
+    percent: 1.2820513
+  - name: MinorWind12
+    attack: 350
+    defense: 120
+    cost: 4
+    sprite: {fileID: 21300000, guid: fa99114feee22904cbda7d30edb1899b, type: 3}
+    percent: 1.2820513
+  - name: MinorWind13
+    attack: 100
+    defense: 150
+    cost: 1
+    sprite: {fileID: 21300000, guid: 54d37dff475a35c4fb7209309e3a4ad1, type: 3}
+    percent: 1.2820513
+  - name: MinorWind14
+    attack: 210
+    defense: 140
+    cost: 2
+    sprite: {fileID: 21300000, guid: 816d9cc3ed8650f489fe27bde9474df6, type: 3}
+    percent: 1.2820513
